@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ca translate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+  <nav class="navbar has-background-black">
+    <div class="navbar-brand">
+      <span class="navbar-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQFC2Q9Bww2ZeBGfTxbfSib-l5vVdpNmaNaqN_MnuehH6r-MJlG">
+      </span>
+      <span class="navbar-item">
+        <p class="subtitle is-9 has-text-primary">
+          CA Translate
+        </p>
+      </span>
+    </div>
+  </nav>
+  <div class="container">
+  <section class="section">
+    <div>
+      <div>
+        <div class="container">
+          <div class="card">
+          <div class="card-content">
+          <div class="content">
+          <div class="field">
+            <label class="label">From</label>
+            <div class="control">
+            <select class="select">
+              <option value="en">English</option>
+              <option value="fr">French</option>
+              <option value="es">Spanish</option>
+              <option value="de">German</option>
+              <option value="ja">Japanese</option>
+              <option value="tl">Tagalog</option>
+              <option value="he">Hebrew</option>
+              <option value="nl">Dutch</option>
+              <option value="it">Italian</option>
+              <option value="th">Thai</option>
+              <option value="ar">Arabic</option>
+            </select>
+            </div><!--End of control-->  
+            </div>
+          </div><!--End of first field-->
+          <div class="field">
+            <label class="label">
+              To
+            </label>
+            <div class="control">
+              <select class="select">
+                <option value="en">English</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="nl">Dutch</option>
+                <option value="it">Italian</option>
+                <option value="es">Spanish</option>
+                <option value="ja">Japanese</option>
+                <option value="tl">Tagalog</option>
+                <option value="th">Thai</option>
+                <option value="he">Hebrew</option>
+                <option value="ar">Arabic</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">
+              Text
+            </label>
+            <div class="control">
+              <textarea id="txt" class="textarea" placeholder="Bonjour">
+              </textarea>
+            </div>
+          </div><!-- End of third field-->
+          <div class="field has-text-centered">
+            <button class="button is-success">
+              Translate
+            </button>
+          </div>
+          </div>
+          </div>
+          </div>
+       </div>
+      </div>
+    </div>
+    <div id="display">
+    </div>
+    <br><br>
+  </div><!--End of big container-->
+  </section>
+  
+  <script>
+    let from = document.querySelectorAll('select')[0];
+    let to = document.querySelectorAll('select')[1];
+    let btn = document.querySelector('button');
+    let textarea = document.querySelector('#txt');
+    let key = "trnsl.1.1.20190418T075927Z.e0b24f5f5fc38dba.d0dce9f26462b2fe7d0e25ab5e248d20979fd5b1";
+    let url = "https://translate.yandex.net/api/v1.5/tr.json/translate";
+    
+    
+    
+    function submit(){
+      alert(from.value);
+      alert(to.value);
+      }
+    btn.addEventListener('click', translate);
+    
+    function translate(){
+       fetch(url+`?key=${key}&lang=${from.value}-${to.value}&text=${textarea.value}`)
+       .then((res)=>{return res.json()})
+       .then((data)=>{
+           //console.log(data.text[0]);
+           let div = "<div class='notification is-link has-text-centered'>";
+           div+=data.text[0];
+           div+='</div>';
+           document.querySelector('#display').innerHTML = div;
+           })
+       .catch((err)=>{
+           console.log(err);
+           });
+
+          
+          
+          
+       }
+    
+ 
+    
+  </script>
+  </body>
+</html>
